@@ -1,7 +1,8 @@
+// 📁 lib/features/auth/presentation/views/login_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/firebase_auth_service.dart';
-import '../../../profile/presentation/pages/profile_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_tasks/features/auth/presentation/viewmodels/auth_view_model.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -11,10 +12,19 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-  final _authService = FirebaseAuthService();
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(authViewModelProvider);
+
+    if (user != null) {
+      // Nếu đã đăng nhập rồi thì chuyển luôn về homepage
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) context.go('/');
+      });
+    }
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -37,17 +47,26 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
             const SizedBox(height: 32),
             ElevatedButton.icon(
-              onPressed: () async {
-                final user = await _authService.signInWithGoogle();
-                if (user != null && context.mounted) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => ProfilePage(user: user)),
-                  );
-                }
-              },
               icon: const Icon(Icons.login),
-              label: const Text('Sign in with Google'),
+              label: _loading
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    )
+                  : const Text('Sign in with Google'),
+              onPressed: _loading
+                  ? null
+                  : () async {
+                      setState(() => _loading = true);
+                      await ref
+                          .read(authViewModelProvider.notifier)
+                          .signInWithGoogle();
+                      if (!mounted) return;
+                      setState(() => _loading = false);
+                    },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(16),
+              ),
             ),
             const SizedBox(height: 32),
             const Text(
