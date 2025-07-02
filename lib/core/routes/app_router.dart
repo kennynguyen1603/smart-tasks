@@ -36,7 +36,6 @@ final routerProvider = Provider<GoRouter>((ref) {
   );
 });
 
-// 👤 Wrapper để truyền User vào ProfilePage
 class ProfilePageWrapper extends ConsumerWidget {
   const ProfilePageWrapper({super.key});
 

@@ -25,6 +25,11 @@ class HomePage extends ConsumerWidget {
                   MaterialPageRoute(builder: (_) => ProfilePage(user: user)),
                 );
               }
+              // onPressed: () {
+              // if (user != null) {
+              //   context.go('/profile');
+              //   }
+              // },
             },
           ),
           IconButton(
