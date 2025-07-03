@@ -21,7 +21,7 @@ class MyApp extends ConsumerWidget {
     final router = ref.watch(routerProvider);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'SmartTasks',
+      title: 'Smart Tasks',
       routerConfig: router,
     );
   }

@@ -36,7 +36,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             Image.asset('assets/images/logo.png', height: 120),
             const SizedBox(height: 24),
             const Text(
-              'SmartTasks',
+              'Smart Tasks',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
