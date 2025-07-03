@@ -7,6 +7,8 @@ import 'package:smart_tasks/features/auth/presentation/viewmodels/auth_view_mode
 import 'package:smart_tasks/features/auth/presentation/views/login_page.dart';
 import 'package:smart_tasks/features/home/presentation/pages/home_page.dart';
 import 'package:smart_tasks/features/profile/presentation/pages/profile_page.dart';
+import 'package:smart_tasks/features/task/presentation/pages/add_task_page.dart';
+import 'package:smart_tasks/features/task/presentation/pages/task_list_page.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final auth = ref.watch(authViewModelProvider);
@@ -31,6 +33,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/profile',
         builder: (context, state) => const ProfilePageWrapper(),
+      ),
+      GoRoute(
+        path: '/add-task',
+        builder: (context, state) => const AddTaskPage(),
+      ),
+      GoRoute(
+        path: '/my-tasks',
+        builder: (context, state) => const TaskListPage(),
       ),
     ],
   );
